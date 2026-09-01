@@ -1,0 +1,47 @@
+schema_version: 1
+
+context:
+  version: "0.5.1"
+
+package:
+  name: earthkit-regrid
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/e/earthkit-regrid/earthkit_regrid-${{ version }}.tar.gz
+  sha256: c0116848106da373d5889ff1c9cf475bddd8edb3765de7c5ad27999c17bac3c3
+
+build:
+  number: 0
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - setuptools >=61
+    - setuptools-scm >=8.0
+    - pip
+  run:
+    - python >=${{ python_min }}
+    - multiurl
+    - filelock
+    - scipy
+
+tests:
+  - python:
+      imports:
+        - earthkit
+      pip_check: true
+      python_version: ${{ python_min }}
+
+about:
+  summary: ECMWF python regridding toolkit
+  license: Apache-2.0
+  license_file: LICENSE
+  homepage: https://github.com/ecmwf/earthkit-regrid/
+  documentation: https://earthkit-regrid.readthedocs.io/
+
+extra:
+  recipe-maintainers:
+    - akrherz
